@@ -31,17 +31,20 @@ class NavBar extends Component {
   componentDidMount() {
     const { firebase } = this.state; //local state
     const [{ session }, dispatch] = this.context; // global state
+
     if (firebase.auth.currentUser !== null && !session) {
-      firebase.db.collection('users').doc(firebase.auth.currentUser.uid).get().then(doc => {
-        console.log(doc.data())
+      firebase.db
+      .collection('users')
+      .doc(firebase.auth.currentUser.uid)
+      .get()
+      .then(doc => {
+        // console.log(doc.data())
         const userDb = doc.data();
         dispatch({
           type: 'SIGN_IN',
           session: userDb,
           auth: true,
-
-        })
-
+        });
       }).catch(err => {
         console.error(err);
       })
@@ -54,7 +57,6 @@ class NavBar extends Component {
     if (nextProps.firebase !== prevState.firebase) {
       newObjects.firebase = nextProps.firebase;
     }
-
     return newObjects;
   }
 

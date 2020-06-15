@@ -66,24 +66,24 @@ export const signupSession = (dispatch, firebase, user) => {
 };
 
 export const signoutSession = (dispatch, firebase) => {
+  console.log(firebase);
+
   return new Promise((resolve, reject) => {
-    firebase.auth
-      .signOut()
-      .then((out) => {
-        dispatch({
-          type: "SIGN_OUT",
-          session: {
-            username: "",
-            name: "",
-            lastname: "",
-            email: "",
-            phone: "",
-            avatar: "",
-          },
-          auth: false,
-        });
-        resolve();
-      })
+    firebase.auth.signOut().then(out => {
+      dispatch({
+        type: "SIGN_OUT",
+        session: {
+          username: "",
+          name: "",
+          lastname: "",
+          email: "",
+          phone: "",
+          avatar: "",
+        },
+        auth: false,
+      });
+      resolve();
+    })
       .catch((err) => {
         console.log(err);
         reject(err);

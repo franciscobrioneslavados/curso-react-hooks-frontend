@@ -11,6 +11,9 @@ import { signoutSession } from '../../sessions/actions/sessionAction';
 import { RightMenu } from './RightMenu';
 import tempUserPhoto from '../../logo.svg'
 import { withRouter } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
+
 
 const styles = (theme) => ({
   sectionDesktop: {
@@ -53,40 +56,48 @@ class BarSession extends Component {
   state = {
     firebase: null,
     right: false,
-  }
-
-  static getDerivedStateFromPops(nextProps, prevState) {
-    let newObjects = {};
-    if (nextProps.firebase !== prevState.firebase) {
-      newObjects.firebase = nextProps.firebase;
-    }
-
-    return newObjects;
+    left: false
   }
 
   signOut = () => {
     const { firebase } = this.state;
     const [{ session }, dispatch] = this.context;
-    signoutSession(dispatch, firebase).then(response => {
-      console.log(response);
+
+    signoutSession(dispatch, firebase).then(success => {
+      // console.log(response);
+      this.props.history.push("/auth/signin");
     }).catch(err => {
       console.error(err);
     })
   }
 
   toggleDrawer = (side, open) => () => {
-    this.setState(
-      {
-        [side]: open
-      }
-    )
+    this.setState({
+      [side]: open
+    })
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let newObjects = {};
+    if (nextProps.firebase !== prevState.firebase) {
+      newObjects.firebase = nextProps.firebase;
+    }
+    return newObjects;
   }
 
   render() {
+    // eslint-disable-next-line
     const [{ session }, dispatch] = this.context;
+    const { firebase } = this.state;
     const { user } = session;
     const { classes } = this.props;
     let textUser = user.username ? user.username : user.email;
+
+    if (!user) {
+      signoutSession(dispatch, firebase).then(success => {
+        this.props.history.push("/auth/login");
+      });
+    }
 
     return (
       <div>
@@ -119,7 +130,10 @@ class BarSession extends Component {
             <Button color="inherit">SIGN IN</Button>
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton color="inherit" onClick={this.toggleDrawer("right", true)}>
+            <IconButton
+              color="inherit"
+              onClick={this.toggleDrawer("right", true)}
+            >
               <i className="material-icons">more_vert</i>
             </IconButton>
           </div>
