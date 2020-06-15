@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Toolbar, Typography, Button, IconButton, Drawer } from "@material-ui/core";
+import { Toolbar, Typography, Button, IconButton, Drawer, Avatar } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import { consumerFirebase } from '../../helpers';
@@ -9,6 +9,7 @@ import { StateContext } from '../../sessions/store';
 import { signoutSession } from '../../sessions/actions/sessionAction';
 
 import { RightMenu } from './RightMenu';
+import { LeftMenu } from './LeftMenu';
 import tempUserPhoto from '../../logo.svg'
 import { withRouter } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -101,6 +102,24 @@ class BarSession extends Component {
 
     return (
       <div>
+        {/* Menu izquierda */}
+        <Drawer
+          open={this.state.left}
+          onClose={this.toggleDrawer("left", false)}
+          anchor="left"
+        >
+          <div
+            role="button"
+            onClick={this.toggleDrawer("left", false)}
+            onKeyDown={this.toggleDrawer("left", false)}>
+            <LeftMenu
+              classes={classes}
+            ></LeftMenu>
+          </div>
+
+        </Drawer>
+
+        {/* Menu Derecha */}
         <Drawer
           open={this.state.right}
           onClose={this.toggleDrawer("right", false)}
@@ -121,13 +140,19 @@ class BarSession extends Component {
 
         </Drawer>
         <Toolbar>
-          <IconButton color="inherit">
+          <IconButton
+            color="inherit"
+            onClick={this.toggleDrawer('left', true)}>
             <i className="material-icons">menu</i>
           </IconButton>
+
           <Typography variant="h6">CURSO REACT</Typography>
           <div className={classes.grow}></div>
           <div className={classes.sectionDesktop}>
-            <Button color="inherit">SIGN IN</Button>
+            <IconButton color="inherit" component={Link} to=""><i className="material-icons">mail_outline</i></IconButton>
+            <Button color="inherit" onClick={this.signOut}>SIGN OUT</Button>
+            <Button color="inherit">{user.username}</Button>
+            <Avatar src={tempUserPhoto}></Avatar>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
