@@ -16,6 +16,8 @@ import Signin from "./components/auth/Signin";
 import { FirebaseContext } from "./helpers";
 
 import { useStateValue } from "./sessions/store";
+import AuthRoutes from './components/auth/AuthRoutes';
+
 
 function App(props) {
   let firebase = React.useContext(FirebaseContext);
@@ -57,7 +59,7 @@ function App(props) {
           <Navbar />
           <Grid container>
             <Switch>
-              <Route path="/" exact component={ListInmovables}></Route>
+              <AuthRoutes exact path="/" authFirebase={firebase.auth.currentUser} component={ListInmovables}></AuthRoutes>
               <Route path="/auth/signup" component={Signup}></Route>
               <Route path="/auth/signin" component={Signin}></Route>
             </Switch>
