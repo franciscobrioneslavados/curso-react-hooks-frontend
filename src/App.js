@@ -13,6 +13,10 @@ import Navbar from "./components/layout/Navbar";
 import ListInmovables from "./components/views/ListInmovables";
 import Signup from "./components/auth/Signup";
 import Signin from "./components/auth/Signin";
+import Profile from './components/auth/Profile';
+import NewInmovables from "./components/views/NewInmovables";
+
+
 import { FirebaseContext } from "./helpers";
 
 import { useStateValue } from "./sessions/store";
@@ -60,6 +64,9 @@ function App(props) {
           <Grid container>
             <Switch>
               <AuthRoutes exact path="/" authFirebase={firebase.auth.currentUser} component={ListInmovables}></AuthRoutes>
+              <AuthRoutes exact path="/main/profile" authFirebase={firebase.auth.currentUser} component={Profile}></AuthRoutes>
+              <AuthRoutes exact path="/main/newinmovable" authFirebase={firebase.auth.currentUser} component={NewInmovables}></AuthRoutes>
+              
               <Route path="/auth/signup" component={Signup}></Route>
               <Route path="/auth/signin" component={Signin}></Route>
             </Switch>

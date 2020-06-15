@@ -2,7 +2,7 @@ export const initialState = {
   user: {
     userId: '',
     username: '',
-    name: '',
+    firstname: '',
     lastname: '',
     email: '',
     phone: '',

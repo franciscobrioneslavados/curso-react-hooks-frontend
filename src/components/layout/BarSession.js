@@ -62,6 +62,7 @@ class BarSession extends Component {
 
   signOut = () => {
     const { firebase } = this.state;
+    // eslint-disable-next-line
     const [{ session }, dispatch] = this.context;
 
     signoutSession(dispatch, firebase).then(success => {
@@ -133,7 +134,7 @@ class BarSession extends Component {
               classes={classes}
               user={user}
               textUser={textUser}
-              photoUser={tempUserPhoto}
+              photoUser={user.avatar || tempUserPhoto}
               signOut={this.signOut}
             ></RightMenu>
           </div>
@@ -152,7 +153,7 @@ class BarSession extends Component {
             <IconButton color="inherit" component={Link} to=""><i className="material-icons">mail_outline</i></IconButton>
             <Button color="inherit" onClick={this.signOut}>SIGN OUT</Button>
             <Button color="inherit">{user.username}</Button>
-            <Avatar src={tempUserPhoto}></Avatar>
+            <Avatar src={user.avatar || tempUserPhoto}></Avatar>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

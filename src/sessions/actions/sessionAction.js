@@ -66,7 +66,6 @@ export const signupSession = (dispatch, firebase, user) => {
 };
 
 export const signoutSession = (dispatch, firebase) => {
-  console.log(firebase);
 
   return new Promise((resolve, reject) => {
     firebase.auth.signOut().then(out => {

@@ -4,6 +4,7 @@ import { useStateValue } from '../../sessions/store';
 
 
 function AuthRoutes({ component: Component, authFirebase, ...rest }) {
+    // eslint-disable-next-line
     const [{ auth }, dispatch] = useStateValue();
     return (
         <Route
