@@ -5,6 +5,7 @@ import { consumerFirebase } from "../../helpers";
 import { openWindowsMessage } from "../../sessions/actions/snackbarAction";
 import ImageUploader from 'react-images-upload';
 import { v4 as uuidv4 } from 'uuid';
+
 const styles = {
     container: {
         paddingTop: "8px",
@@ -57,30 +58,21 @@ class NewInmovables extends Component {
         })
     }
 
-    onSubmitStateObject = () => {
-        const { inmovable } = this.state
-        this.props.firebase.db.collection('inmovables').add(inmovable).then(result => {
-            openWindowsMessage({
-                open: true,
-                message: 'Inmovable Saved!'
-            })
-            this.props.history.push('/')
-        }).catch(err => {
-
-            openWindowsMessage({
-                open: true,
-                message: err.message
-            })
-            console.error(err);
-        })
-    }
-
     onSubmitImagesToList = elements => {
         Object.keys(elements).forEach(function(key) {
             elements[key].urlTemp = URL.createObjectURL(elements[key]);
         })
         this.setState({
             imageFiles: this.state.imageFiles.concat(elements),
+        })
+    }
+
+    onSubmitStateObject = () => {
+        const { inmovable } = this.state
+        this.props.firebase.db.collection('inmovables').add(inmovable).then(result => {
+            this.props.history.push('/')
+        }).catch(err => {
+            console.error(err);
         })
     }
 

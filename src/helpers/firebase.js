@@ -39,5 +39,5 @@ export default class Firebase {
 
     saveDocument = (nameDocument, document) => this.storage.ref().child(nameDocument).put(document);
     returnDocument = (documentUrl) => this.storage.ref().child(documentUrl).getDownloadURL();
-    // saveDocuments = this.storage.ref().saveDocuments(documents);
+    saveDocuments = (documents) => this.storage.ref().saveDocuments(documents);
 }

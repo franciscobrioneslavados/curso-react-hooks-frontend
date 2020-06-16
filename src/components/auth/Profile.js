@@ -45,6 +45,7 @@ const Profile = props => {
         }))
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (stateObject.userId === '') {
             if (session) {
@@ -122,19 +123,19 @@ const Profile = props => {
                     <form style={styles.form}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} md={6}>
-                                <TextField name="firstname" variant="outlined" fullWidth label="Nombres" value={stateObject.firstname} onChange={onChangeStateObject} />
+                                <TextField name="firstname" variant="outlined" fullWidth label="Nombres" value={stateObject.firstname || ''} onChange={onChangeStateObject} />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField name="lastName" variant="outlined" fullWidth label="Apellidos" value={stateObject.lastName} onChange={onChangeStateObject} />
+                                <TextField name="lastName" variant="outlined" fullWidth label="Apellidos" value={stateObject.lastName || ''} onChange={onChangeStateObject} />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField name="username" variant="outlined" fullWidth label="Username" value={stateObject.username} onChange={onChangeStateObject} />
+                                <TextField name="username" variant="outlined" fullWidth label="Username" value={stateObject.username || ''} onChange={onChangeStateObject} />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField name="email" variant="outlined" fullWidth label="Email" value={stateObject.email} onChange={onChangeStateObject} disabled />
+                                <TextField name="email" variant="outlined" fullWidth label="Email" value={stateObject.email || ''} onChange={onChangeStateObject} disabled />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField name="phone" variant="outlined" fullWidth label="Phone Number" value={stateObject.phone} onChange={onChangeStateObject} />
+                                <TextField name="phone" variant="outlined" fullWidth label="Phone Number" value={stateObject.phone || ''} onChange={onChangeStateObject} />
                             </Grid>
 
                             <Grid item xs={12} md={6}>
