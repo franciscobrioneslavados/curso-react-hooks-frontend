@@ -70,15 +70,15 @@ class NewInmovables extends Component {
     onSubmitStateObject = () => {
         const { imageFiles, inmovable } = this.state;
 
-        Object.keys(imageFiles).forEach(function(key) {
+        Object.keys(imageFiles).forEach(function (key) {
             let dinamicValue = Math.floor(new Date().getTime() / 1000);
             let imageName = imageFiles[key].name;
             let imageExt = imageName.split('.').pop();
             imageFiles[key].alias = (
-                imageName.split('.')[0] + 
-                "_" + 
-                dinamicValue + 
-                "." + 
+                imageName.split('.')[0] +
+                "_" +
+                dinamicValue +
+                "." +
                 imageExt)
                 .replace(/\s/g, "_")
                 .toLowerCase();
@@ -90,6 +90,7 @@ class NewInmovables extends Component {
         this.props.firebase.saveDocuments(imageFiles).then(urlList => {
             inmovable.listImages = urlList;
             inmovable.keywords = keywords;
+            inmovable.userId = this.props.firebase.auth.currentUser.uid;
 
             this.props.firebase.db.collection('inmovables').add(inmovable).then(result => {
                 this.props.history.push('/')

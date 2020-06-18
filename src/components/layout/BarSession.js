@@ -88,12 +88,12 @@ class BarSession extends Component {
   }
 
   render() {
-    // eslint-disable-next-line
     const [{ session }, dispatch] = this.context;
     const { firebase } = this.state;
     const { user } = session;
     const { classes } = this.props;
-    let textUser = user.username ? user.username : user.email;
+    let textUser = user.username || user.email || user.phoneNumber;
+    
 
     if (!user) {
       signoutSession(dispatch, firebase).then(success => {
@@ -152,7 +152,7 @@ class BarSession extends Component {
           <div className={classes.sectionDesktop}>
             <IconButton color="inherit" component={Link} to=""><i className="material-icons">mail_outline</i></IconButton>
             <Button color="inherit" onClick={this.signOut}>SIGN OUT</Button>
-            <Button color="inherit">{user.username}</Button>
+            <Button color="inherit">{textUser}</Button>
             <Avatar src={user.avatar || tempUserPhoto}></Avatar>
           </div>
           <div className={classes.sectionMobile}>

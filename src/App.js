@@ -13,6 +13,7 @@ import Navbar from "./components/layout/Navbar";
 import ListInmovables from "./components/views/ListInmovables";
 import Signup from "./components/auth/Signup";
 import Signin from "./components/auth/Signin";
+import SigninMobile from './components/auth/SigninMobile';
 import Profile from './components/auth/Profile';
 import NewInmovables from "./components/views/NewInmovables";
 
@@ -71,6 +72,7 @@ function App(props) {
 
               <Route path="/auth/signup" component={Signup}></Route>
               <Route path="/auth/signin" component={Signin}></Route>
+              <Route path="/auth/signinmobile" component={SigninMobile}></Route>
             </Switch>
           </Grid>
         </MuiThemeProvider>

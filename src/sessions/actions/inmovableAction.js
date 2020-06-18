@@ -8,17 +8,20 @@
 export const getData = (firebase, sizePage, startPage, txt) => {
     return new Promise(async (resolve, reject) => {
         let inmovables = firebase.db.collection('inmovables')
+            .where("userId", "==", firebase.auth.currentUser.uid)
             .orderBy('address')
             .limit(sizePage)
 
         if (startPage !== null) {
             inmovables = firebase.db
                 .collection('inmovables')
+                .where("userId", "==", firebase.auth.currentUser.uid)
                 .startAfter(startPage)
                 .limit(sizePage)
 
             if (txt.trim() !== '') {
                 inmovables = firebase.db.collection('inmovables')
+                    .where("userId", "==", firebase.auth.currentUser.uid)
                     .orderBy('address')
                     .where('keywords', 'array-contains', txt.toLowerCase())
                     .startAfter(startPage)
@@ -59,18 +62,22 @@ export const getData = (firebase, sizePage, startPage, txt) => {
  */
 export const getDataPrev = (firebase, sizePage, startPage, txt) => {
     return new Promise(async (resolve, reject) => {
-        let inmovables = firebase.db.collection('inmovables')
+        let inmovables = firebase.db
+            .collection('inmovables')
+            .where("userId", "==", firebase.auth.currentUser.uid)
             .orderBy('address')
             .limit(sizePage)
 
         if (startPage !== null) {
             inmovables = firebase.db.collection('inmovables')
+                .where("userId", "==", firebase.auth.currentUser.uid)
                 .orderBy('address')
                 .startAt(startPage)
                 .limit(sizePage)
 
             if (txt.trim() !== '') {
                 inmovables = firebase.db.collection('inmovables')
+                    .where("userId", "==", firebase.auth.currentUser.uid)
                     .orderBy('address')
                     .where('keywords', 'array-contains', txt.toLowerCase())
                     .startAt(startPage)

@@ -6,6 +6,7 @@ import {
   Grid,
   TextField,
   Button,
+  Link
 } from "@material-ui/core";
 import LockOutLineIcon from "@material-ui/icons/LockOutlined";
 import { compose } from "recompose";
@@ -18,25 +19,27 @@ import { openWindowsMessage } from "../../sessions/actions/snackbarAction";
 
 const style = {
   paper: {
-    marginTop: 8,
+    marginTop: 9,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
   },
   avatar: {
-    margin: 8,
-    backgroundColor: "#e53935",
+    margin: 5,
+    backgroundColor: "red"
   },
   form: {
     width: "100%",
-    marginTop: 10,
+    marginTop: 8
   },
   submit: {
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 20
   },
   textFields: {
-    margin: 10,
-  },
+    marginTop: 10,
+    marginBottom: 10
+  }
 };
 
 // eslint-disable-next-line
@@ -87,11 +90,11 @@ class Signup extends Component {
         message: err.message.message,
       });
     })
-    
+
   };
   render() {
     return (
-      <Container maxWidth="md">
+      <Container maxWidth="xs">
         <div style={style.paper}>
           <Avatar style={style.avatar}>
             <LockOutLineIcon />
@@ -100,51 +103,51 @@ class Signup extends Component {
             SIGN UP
           </Typography>
           <form style={style.form}>
-            <Grid container justify="center">
-              <Grid item md={6} xs={12}>
-                <TextField
-                  variant="outlined"
-                  name="username"
-                  fullWidth
-                  label="Username"
-                  style={style.textFields}
-                  value={this.state.user.username}
-                  onChange={this.onChange}
-                />
-                <TextField
-                  variant="outlined"
-                  name="email"
-                  fullWidth
-                  label="Email"
-                  style={style.textFields}
-                  value={this.state.user.email}
-                  onChange={this.onChange}
-                />
-                <TextField
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  fullWidth
-                  label="Password"
-                  style={style.textFields}
-                  value={this.state.user.password}
-                  onChange={this.onChange}
-                />
-              </Grid>
-            </Grid>
-            <Grid container justify="center">
-              <Grid item xs={12} md={6}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  size="large"
-                  color="primary"
-                  style={style.submit}
-                  onClick={this.onSignup}
-                >
-                  SIGN UP
+
+            <TextField
+              variant="outlined"
+              name="username"
+              fullWidth
+              label="Username"
+              style={style.textFields}
+              value={this.state.user.username}
+              onChange={this.onChange}
+            />
+            <TextField
+              variant="outlined"
+              name="email"
+              fullWidth
+              label="Email"
+              style={style.textFields}
+              value={this.state.user.email}
+              onChange={this.onChange}
+            />
+            <TextField
+              variant="outlined"
+              type="password"
+              name="password"
+              fullWidth
+              label="Password"
+              style={style.textFields}
+              value={this.state.user.password}
+              onChange={this.onChange}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              size="large"
+              color="primary"
+              style={style.submit}
+              onClick={this.onSignup}
+            >
+              SIGN UP
                 </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="/auth/signin" variant="body2">
+                  {"Already have an account?"}
+                </Link>
               </Grid>
             </Grid>
           </form>

@@ -6,6 +6,7 @@ import {
   Grid,
   TextField,
   Button,
+  Link
 } from "@material-ui/core";
 import LockOutLineIcon from "@material-ui/icons/LockOutlined";
 import { compose } from "recompose";
@@ -15,31 +16,35 @@ import { signinSession } from "../../sessions/actions/sessionAction";
 import { StateContext } from "../../sessions/store";
 import { openWindowsMessage } from "../../sessions/actions/snackbarAction";
 
+
 const style = {
   paper: {
-    marginTop: 8,
+    marginTop: 9,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
   },
   avatar: {
-    margin: 8,
-    backgroundColor: "#e53935",
+    margin: 5,
+    backgroundColor: "red"
   },
   form: {
     width: "100%",
-    marginTop: 10,
+    marginTop: 8
   },
   submit: {
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 20
   },
   textFields: {
-    margin: 10,
-  },
+    marginTop: 10,
+    marginBottom: 10
+  }
 };
 
 class Signin extends Component {
   static contextType = StateContext;
+
   state = {
     firebase: null,
     user: {
@@ -96,9 +101,27 @@ class Signin extends Component {
     */
   };
 
+  onForgotPassword = () => {
+    const { firebase, user } = this.state;
+    const [{ session }, dispatch] = this.context;
+
+    firebase.auth.sendPasswordResetEmail(user.email).then(result => {
+      openWindowsMessage(dispatch, {
+        open: true,
+        message: "An email has been sent to your mailbox"
+      })
+    }).catch(err => {
+      console.error(err);
+      openWindowsMessage(dispatch, {
+        open: true,
+        message: err.message
+      })
+    })
+  }
+
   render() {
     return (
-      <Container maxWidth="md">
+      <Container maxWidth="xs">
         <div style={style.paper}>
           <Avatar style={style.avatar}>
             <LockOutLineIcon />
@@ -107,45 +130,62 @@ class Signin extends Component {
             SIGN IN
           </Typography>
           <form style={style.form}>
-            <Grid container justify="center">
-              <Grid item md={6} xs={12}>
-                <TextField
-                  variant="outlined"
-                  name="email"
-                  fullWidth
-                  label="Email"
-                  style={style.textFields}
-                  value={this.state.user.email}
-                  onChange={this.onChange}
-                />
-                <TextField
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  fullWidth
-                  label="Password"
-                  style={style.textFields}
-                  value={this.state.user.password}
-                  onChange={this.onChange}
-                />
-              </Grid>
-            </Grid>
-            <Grid container justify="center">
-              <Grid item xs={12} md={6}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  size="large"
-                  color="primary"
-                  style={style.submit}
-                  onClick={this.onSignin}
-                >
-                  SIGN IN
+            <TextField
+              variant="outlined"
+              name="email"
+              fullWidth
+              label="Email"
+              style={style.textFields}
+              value={this.state.user.email}
+              onChange={this.onChange}
+            />
+            <TextField
+              variant="outlined"
+              type="password"
+              name="password"
+              fullWidth
+              label="Password"
+              style={style.textFields}
+              value={this.state.user.password}
+              onChange={this.onChange}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              size="large"
+              color="primary"
+              style={style.submit}
+              onClick={this.onSignin}
+            >
+              SIGN IN
                 </Button>
+
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2" onClick={this.onForgotPassword}>
+                  {"Forgot password?"}
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/auth/signup" variant="body2">
+                  {"Need Account? Signup"}
+                </Link>
               </Grid>
             </Grid>
+
           </form>
+
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            style={style.submit}
+            href="/auth/signinmobile"
+          >
+            Sign in with your phone number
+                    </Button>
         </div>
       </Container>
     );

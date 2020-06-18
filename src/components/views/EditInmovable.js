@@ -114,6 +114,7 @@ class EditInmovable extends Component {
         const keyWords = createKeyword(searchTxt);
 
         inmovable.keywords = keyWords;
+        inmovable.userId = this.props.firebase.auth.currentUser.uid; // añadir el usuario logeado a la tabla de inmovables 
 
         this.props.firebase.db
             .collection('inmovables')

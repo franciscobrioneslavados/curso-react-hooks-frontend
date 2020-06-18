@@ -47,7 +47,7 @@ class ListInmovables extends Component {
     listInmovables: [],
     searchTxt: '',
     pages: [],
-    sizePage: 1,
+    sizePage: 10,
     initPage: null,
     currentPage: 0,
 
