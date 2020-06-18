@@ -45,12 +45,15 @@ const Profile = props => {
         }))
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const onValidStateForm = session => {
+        if (session) {
+            changeStateObject(session.user);
+        }
+    }
+
     useEffect(() => {
         if (stateObject.userId === '') {
-            if (session) {
-                changeStateObject(session.user);
-            }
+            onValidStateForm(session);
         }
     })
 

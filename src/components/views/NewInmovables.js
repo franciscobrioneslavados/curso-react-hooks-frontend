@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Container, Paper, Grid, Breadcrumbs, Link, Typography, TextField, Button, Table, TableBody, TableRow, TableCell } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import { consumerFirebase } from "../../helpers";
-import { openWindowsMessage } from "../../sessions/actions/snackbarAction";
 import ImageUploader from 'react-images-upload';
 import { v4 as uuidv4 } from 'uuid';
+import { createKeyword } from '../../sessions/actions/Keyword';
 
 const styles = {
     container: {
@@ -45,7 +45,7 @@ class NewInmovables extends Component {
             country: '',
             inDatails: '',
             outDetails: '',
-            images: [],
+            listImages: [],
         },
         imageFiles: []
     }
@@ -59,7 +59,7 @@ class NewInmovables extends Component {
     }
 
     onSubmitImagesToList = elements => {
-        Object.keys(elements).forEach(function(key) {
+        Object.keys(elements).forEach(function (key) {
             elements[key].urlTemp = URL.createObjectURL(elements[key]);
         })
         this.setState({
@@ -68,15 +68,39 @@ class NewInmovables extends Component {
     }
 
     onSubmitStateObject = () => {
-        const { inmovable } = this.state
-        this.props.firebase.db.collection('inmovables').add(inmovable).then(result => {
-            this.props.history.push('/')
-        }).catch(err => {
-            console.error(err);
+        const { imageFiles, inmovable } = this.state;
+
+        Object.keys(imageFiles).forEach(function(key) {
+            let dinamicValue = Math.floor(new Date().getTime() / 1000);
+            let imageName = imageFiles[key].name;
+            let imageExt = imageName.split('.').pop();
+            imageFiles[key].alias = (
+                imageName.split('.')[0] + 
+                "_" + 
+                dinamicValue + 
+                "." + 
+                imageExt)
+                .replace(/\s/g, "_")
+                .toLowerCase();
         })
+
+        const searchTxt = inmovable.address + ' ' + inmovable.city + ' ' + inmovable.country;
+        let keywords = createKeyword(searchTxt);
+
+        this.props.firebase.saveDocuments(imageFiles).then(urlList => {
+            inmovable.listImages = urlList;
+            inmovable.keywords = keywords;
+
+            this.props.firebase.db.collection('inmovables').add(inmovable).then(result => {
+                this.props.history.push('/')
+            }).catch(err => {
+                console.error(err);
+            })
+        })
+
     }
 
-    onRemoveImageFromList = elementName => {
+    onRemoveImageFromList = elementName => () => {
         this.setState({
             imageFiles: this.state.imageFiles.filter(archivo => {
                 return archivo.name !== elementName;

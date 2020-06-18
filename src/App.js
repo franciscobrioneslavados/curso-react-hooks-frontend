@@ -21,6 +21,7 @@ import { FirebaseContext } from "./helpers";
 
 import { useStateValue } from "./sessions/store";
 import AuthRoutes from './components/auth/AuthRoutes';
+import EditInmovable from "./components/views/EditInmovable";
 
 
 function App(props) {
@@ -66,7 +67,8 @@ function App(props) {
               <AuthRoutes exact path="/" authFirebase={firebase.auth.currentUser} component={ListInmovables}></AuthRoutes>
               <AuthRoutes exact path="/main/profile" authFirebase={firebase.auth.currentUser} component={Profile}></AuthRoutes>
               <AuthRoutes exact path="/main/newinmovable" authFirebase={firebase.auth.currentUser} component={NewInmovables}></AuthRoutes>
-              
+              <AuthRoutes exact path="/main/inmovable/:id" authFirebase={firebase.auth.currentUser} component={EditInmovable}></AuthRoutes>
+
               <Route path="/auth/signup" component={Signup}></Route>
               <Route path="/auth/signin" component={Signin}></Route>
             </Switch>
