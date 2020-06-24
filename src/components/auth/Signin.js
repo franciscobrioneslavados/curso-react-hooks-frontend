@@ -103,6 +103,7 @@ class Signin extends Component {
 
   onForgotPassword = () => {
     const { firebase, user } = this.state;
+    // eslint-disable-next-line
     const [{ session }, dispatch] = this.context;
 
     firebase.auth.sendPasswordResetEmail(user.email).then(result => {
